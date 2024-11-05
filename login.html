@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jewelry Design - Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: url('5.png') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            background: rgba(8, 8, 8, 0);
+            border-radius: 10px;
+        }
+
+        .login-box h1 {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #1b1919;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 1.5rem;
+            color: #1d1c1c;
+            margin-bottom: 10px;
+        }
+
+        .input-group input {
+            width: calc(100% - 40px);
+            padding: 10px;
+            border: #e1e0e0;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            display: inline-block;
+        }
+
+        .input-group .toggle-password {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            cursor: pointer;
+        }
+
+        .input-group button {
+            width: 100%;
+            padding: 10px;
+            background-color: #b38481;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .input-group button:hover {
+            background-color: #b38481;
+        }
+
+        .links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .links a {
+            font-size: 1rem;
+            color: #555;
+            text-decoration: none;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <h1>Login</h1>
+            <form id="loginForm" action="/login" method="POST">
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    <span class="toggle-password"><i class="fas fa-eye" onclick="togglePassword('password')"></i></span>
+                </div>
+                <div class="input-group">
+                    <button type="submit">Login</button>
+                </div>
+            </form>
+            <div class="links">
+                <a href="forgot.html">Forgot Password?</a>
+                <a href="create.html">Create Account</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword(passwordFieldId) {
+            const passwordField = document.getElementById(passwordFieldId);
+            const passwordFieldType = passwordField.getAttribute('type');
+
+            if (passwordFieldType === 'password') {
+                passwordField.setAttribute('type', 'text');
+                event.target.classList.remove('fa-eye');
+                event.target.classList.add('fa-eye-slash');
+            } else {
+                passwordField.setAttribute('type', 'password');
+                event.target.classList.remove('fa-eye-slash');
+                event.target.classList.add('fa-eye');
+            }
+        }
+
+        // Handle form submission
+        document.getElementById('loginForm').onsubmit = function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Send data to the server
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username, 
+                    password,
+                }),
+            })
+            .then(response => response.text())
+            .then(data => {
+                // Handle the response from the server
+                if (data.includes('Successfully logged in')) {
+                    alert('Login successful!');
+                    window.location.href = 'home.html'; // Redirect to home page
+                } else {
+                    alert('Invalid username or password');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        };
+    </script>
+</body>
+</html>

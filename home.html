@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOME PAGE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        h1 {
+            text-align: center;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            color: rgb(1, 8, 14);
+        }
+
+        /* General styling for the navigation bar */
+        nav {
+            background-color: #03000c;
+            padding: 15px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            font-size: 18px;
+            text-decoration: none;
+            margin: 0 15px;
+            padding: 10px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background-color: #fff;
+            color: #44424a;
+            border: 1px solid #5D3FD3;
+        }
+
+        /* Styling for the active link */
+        nav a.active {
+            background-color: #fff;
+            color: #5D3FD3;
+            font-weight: bold;
+            border: 1px solid #5D3FD3;
+        }
+
+        /* Media query for responsiveness */
+        @media (max-width: 768px) {
+            nav {
+                display: flex;
+                flex-direction: column;
+            }
+
+            nav a {
+                margin: 10px 0;
+                width: 100%;
+            }
+        }
+
+        /* Section styling */
+        .section {
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .preview img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        /* Slideshow styling */
+        .slideshow-container {
+            max-width: 50%;
+            height: auto;
+            position: relative;
+            margin: auto;
+            text-align: center;
+        }
+
+        .mySlides {
+            display: none;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 2 / 1; /* Adjust this ratio as needed */
+        }
+
+        img {
+            vertical-align: middle;
+            max-height: 400px;
+            width: 100%;
+            border-radius: 8px; /* Optional: adds rounded corners */
+        }
+
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            margin-top: -22px;
+            padding: 16px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            background-color: rgba(0, 0, 0, 0.5); /* Optional: Adds background for visibility */
+        }
+
+        .prev {
+            left: 10px; /* Position left indicator */
+        }
+
+        .next {
+            right: 10px; /* Position right indicator */
+            border-radius: 3px 0 0 3px;
+        }
+
+        /* Upload section horizontal layout */
+        .upload-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .preview-container {
+            max-width: 400px;
+            width: 100%;
+            height: auto;
+            padding: 15px;
+            border: 2px solid black;
+            background-color: #fff;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .upload-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-direction: column;
+            padding: 20px;
+            border: 2px solid black;
+            background-color: #fff;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        /* Instruction boxes */
+        .instructions {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            margin: 20px 0;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+
+        .instruction-box {
+            width: 30%;
+            height: 30%;
+            padding: 20px;
+            background-color: #f3f3f3;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: rgba(219, 183, 183, 0.29);
+        }
+
+        /* Zig-Zag pattern for About Page */
+        .zigzag-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .zigzag-box {
+            width: 48%;
+            margin: 1%;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .zigzag-box img {
+            max-width: 100%;
+            border-radius: 8px;
+            justify-content: center;
+        }
+
+        .contact-image-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .contact-image {
+            max-width: 50%;
+            height: auto;
+            background-color: rgb(217, 217, 188);
+        }
+
+        button {
+            margin:10px;
+        }
+        #generatedImage {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>JEWELRY DESIGN PATTERN GENERATION</h1>
+    </header>
+
+    <nav>
+        <a href="javascript:void(0);" onclick="showSection('Home')" class="active">HOME</a>
+        <a href="javascript:void(0);" onclick="showSection('upload')">UPLOAD FILE</a>
+        <a href="javascript:void(0);" onclick="showSection('about')">ABOUT</a>
+        <a href="javascript:void(0);" onclick="showSection('contact')">CONTACT US</a>
+    </nav><br>
+    <br>
+
+    <div class="container">
+        <!-- Slideshow Section in Home Page -->
+        <section id="Home" class="section">
+            <div class="slideshow-container">
+                <div class="mySlides">
+                    <img src="11.png" alt="Jewelry Design 1">
+                </div>
+                <div class="mySlides">
+                    <img src="12.png" alt="Jewelry Design 2">
+                </div>
+                <div class="mySlides">
+                    <img src="13.png" alt="Jewelry Design 3">
+                </div>
+                <div class="mySlides">
+                    <img src="14.png" alt="Jewelry Design 4">
+                </div>
+                <div class="mySlides">
+                    <img src="16.png" alt="Jewelry Design 5">
+                </div>
+                <div class="mySlides">
+                    <img src="20.png" alt="Jewelry Design 5">
+                </div>
+                <div class="mySlides">
+                    <img src="15.png" alt="Jewelry Design 5">
+                </div>
+            </div>
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+            <!-- Instructions in Boxes -->
+            <div class="instructions">
+                <div class="instruction-box">
+                    <h2>Step 1</h2>
+                    <h3>Choose your design inspiration.</h3>
+                </div>
+                <div class="instruction-box">
+                    <h2>Step 2</h2>
+                    <h3>Upload your favorite patterns.</h3>
+                </div>
+                <div class="instruction-box">
+                    <h2>Step 3</h2>
+                    <h3>Generate custom designs.</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- File Upload Section -->
+        <section id="upload" class="section hidden">
+            <h2>UPLOAD IMAGE</h2>
+            <div class="upload-container">
+                <div class="upload-box">
+                    <form id="imageForm" action="/upload" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="username" id="username" value="<!-- Insert Logged In User's Username Here -->">
+                        <input type="file" id="imageInput" name="imageInput" accept="image/*" required>
+                        <br>
+                        <button type="submit" id="submitButton">Submit</button>
+                    </form>
+                </div>
+
+                <div class="preview-container">
+                    <h3>Image Preview:</h3>
+                    <img id="previewImage" class="preview-image" alt="Preview">
+                </div>
+                <div class="preview-container">
+                    <h2>Generated Image: </h2>
+                    <img id="generatedImage" class="preview-image" alt="Generated">
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section hidden">
+            <h2>ABOUT US</h2>
+            <div class="zigzag-container">
+                <div class="zigzag-box">
+                    <img src="about1.jpg" alt="About Us 1">
+                    <h3>Our Mission</h3>
+                    <h3>To create stunning jewelry designs that inspire and empower.</h3>
+                </div>
+                <div class="zigzag-box">
+                    <img src="about2.jpg" alt="About Us 2">
+                    <h3>Our Vision</h3>
+                    <h3>To be a leader in innovative jewelry design.</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section hidden" style="text-align:center">
+            <h1>CONTACT US</h1>
+            <h2>For more information or queries, please contact:</h2>
+            <h3><i class="fas fa-phone"></i> 040-67896789</h3>
+            <h3><i class="fab fa-whatsapp"></i> +91 9094909490</h3>
+            <h3><i class="fas fa-envelope"></i> info@jewelrydesign.com</h3>
+        </section>
+    </div>
+
+    <script>
+        // Slideshow function
+        let slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) { slideIndex = 1 }
+            slides[slideIndex - 1].style.display = "block";
+            setTimeout(showSlides, 3000); // Change image every 3 seconds
+        }
+
+        function plusSlides(n) {
+            slideIndex += n;
+            showSlides();
+        }
+
+        // Show selected section
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById(sectionId).classList.remove('hidden');
+
+            // Update active link in navigation
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+            navLinks.forEach(link => {
+                if (link.textContent === sectionId.toUpperCase()) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+    const imageInput = document.getElementById('imageInput');
+    const previewImage = document.getElementById('previewImage');
+    const submitButton = document.getElementById('submitButton');
+
+    // Display the uploaded image immediately
+    imageInput.addEventListener('change', function (e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                previewImage.src = event.target.result;
+                previewImage.style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Send the uploaded image to the backend on Submit and display the generated image
+    submitButton.addEventListener('click', async function (e) {
+        e.preventDefault();
+        
+        // Create a FormData object to send the file with the POST request
+        const formData = new FormData(document.getElementById('imageForm'));
+
+        try {
+            // Update URL to match backend route
+            const response = await fetch('/process-image', {
+                method: 'POST',
+                body: formData
+            });
+            if (response.ok) {
+                console.log("Image retreival reached");
+                const blob = await response.blob();
+                const generatedImageURL = URL.createObjectURL(blob);
+
+                const generatedImage = document.getElementById('generatedImage');
+                generatedImage.src = generatedImageURL;
+                generatedImage.style.display = 'block';
+            } else {
+                alert("Failed to generate image. Please try again.");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("An error occurred while processing the request.");
+        }
+    });
+
+</script>
+
+</body>
+</html>
