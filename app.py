@@ -24,7 +24,7 @@ CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})  # Restrict C
 
 # Load GAN model
 try:
-    generator_model = tf.keras.models.load_model('generator_epoch_100.h5')
+    generator_model = tf.keras.models.load_model('generator_model.h5')
 except Exception as e:
     raise
 
